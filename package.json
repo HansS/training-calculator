@@ -1,0 +1,11 @@
+{
+  "name": "training-calculator",
+  "version": "0.0.1",
+  "description": "A simple calculation api for using in a training exercise I am conducting, DO NOT USE unless you are taking my training.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Winchester",
+  "license": "MIT"
+}
