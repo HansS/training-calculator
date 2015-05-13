@@ -2,7 +2,6 @@ var _ = require('lodash');
 
 var operations = {
     '+': _.memoize(function(a, b){
-        console.log('moo');
         return a + b;
     }, resolver),
     '-': _.memoize(function(a, b) {
