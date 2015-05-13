@@ -1,23 +1,30 @@
+var _ = require('lodash');
+
 var operations = {
-    '+': function(a, b){
+    '+': _.memoize(function(a, b){
+        console.log('moo');
         return a + b;
-    },
-    '-': function(a, b) {
+    }, resolver),
+    '-': _.memoize(function(a, b) {
         return a - b;
-    },
-    '*': function(a, b){
+    }, resolver),
+    '*': _.memoize(function(a, b){
         return a * b;
-    },
-    '%': function(a, b){
+    }, resolver),
+    '%': _.memoize(function(a, b){
         return a % b;
-    },
-    '^': function(a, b){
+    }, resolver),
+    '^': _.memoize(function(a, b){
         return Math.pow(a, b);
-    },
-    '/': function(a, b){
+    }, resolver),
+    '/': _.memoize(function(a, b){
         return Math.floor(a / b);
-    }
+    }, resolver)
 };
+
+function resolver(){
+    return Array.prototype.join.call(arguments, ':');
+}
 
 function flattenArray(arr){
     return arr.reduce(function(prev, curr){
@@ -35,17 +42,17 @@ function flattenArray(arr){
     }, []);
 }
 
-module.exports = function(){
+module.exports = function calc(){
     var args = Array.prototype.slice.apply(arguments);
     args = flattenArray(args);
 
     return args.reduce(function(prev, curr){
-        if(prev instanceof Function){
-            return prev(parseInt(curr, 10));
-        }
-
         if(operations[curr] instanceof Function){
             return operations[curr].bind(null, prev);
+        }
+
+        if(prev instanceof Function){
+            return prev(parseInt(curr, 10));
         }
 
         if(prev !== null){
